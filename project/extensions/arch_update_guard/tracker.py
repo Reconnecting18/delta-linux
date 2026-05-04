@@ -74,7 +74,9 @@ def compute_diff(from_snapshot_id: str, to_snapshot_id: str) -> dict[str, Any]:
         elif path not in cf_b:
             configs_changed.append({"path": path, "change_type": "removed"})
         elif ha != hb:
-            configs_changed.append({"path": path, "change_type": "modified", "sha256_before": ha, "sha256_after": hb})
+            configs_changed.append(
+                {"path": path, "change_type": "modified", "sha256_before": ha, "sha256_after": hb}
+            )
 
     breaking: list[str] = []
     for u in upgraded:
@@ -88,7 +90,11 @@ def compute_diff(from_snapshot_id: str, to_snapshot_id: str) -> dict[str, Any]:
 
     severity = "info"
     if breaking:
-        severity = "high" if "kernel_package_changed" in breaking or "glibc_changed" in breaking else "warn"
+        severity = (
+            "high"
+            if "kernel_package_changed" in breaking or "glibc_changed" in breaking
+            else "warn"
+        )
 
     computed_at = time.time()
     with _connect() as conn:

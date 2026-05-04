@@ -87,9 +87,9 @@ def parse_pacman_q_list(stdout: str) -> dict[str, str]:
 
 def _ollama_tags() -> dict[str, Any]:
     raw = os.getenv("OLLAMA_URL", "http://localhost:11434")
-    base = validated_http_service_url(
-        raw, mode="ollama", default="http://localhost:11434"
-    ).rstrip("/")
+    base = validated_http_service_url(raw, mode="ollama", default="http://localhost:11434").rstrip(
+        "/"
+    )
     try:
         with httpx.Client(timeout=15.0) as c:
             r = c.get(f"{base}/api/tags")

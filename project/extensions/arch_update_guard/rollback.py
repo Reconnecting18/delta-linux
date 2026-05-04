@@ -129,9 +129,7 @@ def execute_rollback(
                 continue
             p = canonical_etc_path(str(path))
             if p is None:
-                job_steps.append(
-                    {"path": path, "skipped": True, "reason": "not under /etc"}
-                )
+                job_steps.append({"path": path, "skipped": True, "reason": "not under /etc"})
                 continue
             try:
                 parent = os.path.dirname(p)

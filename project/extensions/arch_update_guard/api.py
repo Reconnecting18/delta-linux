@@ -112,13 +112,18 @@ def _mount_routes(r: APIRouter) -> None:
 
     @r.post("/snapshots")
     def create_snapshot_route(body: SnapshotCreateBody):
-        kind = body.kind if body.kind in (
-            "pre_update",
-            "post_update",
-            "manual",
-            "scheduled",
-            "cli",
-        ) else "manual"
+        kind = (
+            body.kind
+            if body.kind
+            in (
+                "pre_update",
+                "post_update",
+                "manual",
+                "scheduled",
+                "cli",
+            )
+            else "manual"
+        )
         return snap.create_snapshot(
             kind=kind,
             label=body.label or None,

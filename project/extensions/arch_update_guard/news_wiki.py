@@ -30,9 +30,7 @@ def _base_url() -> str:
     import os
 
     raw = os.environ.get("DELTAI_BASE_URL", DEFAULT_BASE)
-    return validated_http_service_url(
-        raw, mode="ingest", default=DEFAULT_BASE
-    ).rstrip("/")
+    return validated_http_service_url(raw, mode="ingest", default=DEFAULT_BASE).rstrip("/")
 
 
 def _ingest_sync(source: str, context: str, *, ttl: int, tags: list[str]) -> dict[str, Any]:

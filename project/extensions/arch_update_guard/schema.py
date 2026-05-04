@@ -20,7 +20,9 @@ def init_arch_guard_tables(conn: sqlite3.Connection) -> None:
     """)
     row = conn.execute("SELECT version FROM arch_guard_schema_version LIMIT 1").fetchone()
     if row is None:
-        conn.execute("INSERT INTO arch_guard_schema_version (version) VALUES (?)", (SCHEMA_VERSION,))
+        conn.execute(
+            "INSERT INTO arch_guard_schema_version (version) VALUES (?)", (SCHEMA_VERSION,)
+        )
 
     conn.execute("""
         CREATE TABLE IF NOT EXISTS arch_guard_settings (

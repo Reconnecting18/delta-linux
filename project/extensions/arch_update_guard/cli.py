@@ -19,7 +19,9 @@ def main() -> int:
     os.chdir(project_root)
 
     parser = argparse.ArgumentParser(prog="arch-update-guard", description="Arch update guard CLI")
-    parser.add_argument("--mode", choices=("auto", "manual"), help="Persist scheduler mode in SQLite")
+    parser.add_argument(
+        "--mode", choices=("auto", "manual"), help="Persist scheduler mode in SQLite"
+    )
     parser.add_argument("--interval", type=float, help="Auto-check interval in seconds (min 60)")
     parser.add_argument("--check", action="store_true", help="Run pending update check")
     parser.add_argument("--snapshot", action="store_true", help="With --check, create a snapshot")
@@ -28,9 +30,13 @@ def main() -> int:
     parser.add_argument("--show-snapshot", metavar="ID", help="Print snapshot metadata JSON")
     parser.add_argument("--diff", nargs=2, metavar=("FROM", "TO"), help="Compare two snapshot IDs")
     parser.add_argument("--rollback", metavar="ID", help="Rollback plan or execute")
-    parser.add_argument("--dry-run", action="store_true", default=True, help="Rollback dry run (default)")
+    parser.add_argument(
+        "--dry-run", action="store_true", default=True, help="Rollback dry run (default)"
+    )
     parser.add_argument("--no-dry-run", action="store_true", help="Execute rollback staging")
-    parser.add_argument("--apply-etc", action="store_true", help="With rollback execute, write /etc (root only)")
+    parser.add_argument(
+        "--apply-etc", action="store_true", help="With rollback execute, write /etc (root only)"
+    )
 
     args = parser.parse_args()
 

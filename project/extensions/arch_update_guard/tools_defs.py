@@ -59,7 +59,11 @@ ARCH_GUARD_TOOLS = [
             "parameters": {
                 "type": "object",
                 "properties": {
-                    "label": {"type": "string", "description": "Optional human-readable label.", "default": ""},
+                    "label": {
+                        "type": "string",
+                        "description": "Optional human-readable label.",
+                        "default": "",
+                    },
                     "include_reverse_deps": {
                         "type": "boolean",
                         "description": "Include pactree hints in pending summary inside snapshot.",
