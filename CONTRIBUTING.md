@@ -29,7 +29,7 @@ Run `python tests/verify_distill.py` when you change distillation or related tra
 
 - **User-facing or structural changes:** update [README.md](README.md) and [CLAUDE.md](CLAUDE.md) in the same PR.
 - **Onboarding, boundaries, or verification commands:** update [AGENTS.md](AGENTS.md).
-- **New agent conventions:** add or adjust rules under [`.cursor/rules/`](.cursor/rules/) (keep them short; put narrative detail in `CLAUDE.md`).
+- **New agent conventions:** add or adjust rules under [`.ai-rules/rules/`](.ai-rules/rules/) (keep them short; put narrative detail in `CLAUDE.md`).
 
 ## Usage of AI
 
