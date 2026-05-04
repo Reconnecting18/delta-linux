@@ -90,6 +90,4 @@ def build_react_system_prompt(max_iter: int) -> str:
 
 def protocol_antifabrication_reminder() -> str:
     """Short line for specialized internal prompts (e.g. self-heal)."""
-    return (
-        "Protocol 5 applies: never fabricate diagnostics; only choose repairs justified by the report text."
-    )
+    return "Protocol 5 applies: never fabricate diagnostics; only choose repairs justified by the report text."

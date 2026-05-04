@@ -11,7 +11,7 @@ from delta.core.plugin_manager import PluginManager, set_plugin_enabled, upsert_
 
 
 def _good_plugin_source() -> str:
-    return '''
+    return """
 class Plugin:
     def __init__(self):
         self.shutdown_called = False
@@ -24,7 +24,7 @@ class Plugin:
 
     def get_commands(self):
         return {"ping": lambda: "pong"}
-'''
+"""
 
 
 def test_load_enabled_and_get_all_commands(tmp_path: Path) -> None:

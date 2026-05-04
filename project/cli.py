@@ -101,6 +101,7 @@ def _rich_box():
 def _venv_activate_cmd() -> str:
     return ".\\venv\\Scripts\\activate" if sys.platform == "win32" else "source venv/bin/activate"
 
+
 # ── ASCII BANNER ───────────────────────────────────────────────────────
 
 _TITLE = "MODULAR AI EXTENSION"

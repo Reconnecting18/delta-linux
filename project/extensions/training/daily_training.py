@@ -92,6 +92,7 @@ def _get_vram_free_mb() -> int:
     """Get free VRAM in MB. Returns 0 on error."""
     try:
         import pynvml
+
         pynvml.nvmlInit()
         handle = pynvml.nvmlDeviceGetHandleByIndex(0)
         info = pynvml.nvmlDeviceGetMemoryInfo(handle)
@@ -100,9 +101,12 @@ def _get_vram_free_mb() -> int:
         pass
     try:
         import subprocess
+
         result = subprocess.run(
             ["nvidia-smi", "--query-gpu=memory.free", "--format=csv,noheader,nounits"],
-            capture_output=True, text=True, timeout=10
+            capture_output=True,
+            text=True,
+            timeout=10,
         )
         if result.returncode == 0:
             return int(result.stdout.strip().split("\n")[0])
@@ -115,8 +119,10 @@ def _is_sim_running() -> bool:
     """True if a configured foreground sim / heavy app process is running (VRAM guard)."""
     try:
         import psutil
-        SIM_PROCESSES = os.getenv("SIM_PROCESS_NAMES",
-                                  "LeMansUltimate_,LeMansUltimate.exe,LMU.exe").split(",")
+
+        SIM_PROCESSES = os.getenv(
+            "SIM_PROCESS_NAMES", "LeMansUltimate_,LeMansUltimate.exe,LMU.exe"
+        ).split(",")
         for proc in psutil.process_iter(["name"]):
             pname = (proc.info.get("name") or "").lower()
             if any(s.lower().rstrip("_") in pname for s in SIM_PROCESSES):
@@ -130,6 +136,7 @@ def _check_session_active() -> bool:
     """Check if a GPU focus session is active via deltai /session/status API."""
     try:
         import httpx
+
         base_url = os.getenv("DELTAI_API_URL", "http://localhost:8000")
         resp = httpx.get(f"{base_url}/session/status", timeout=3)
         if resp.status_code == 200:
@@ -160,14 +167,18 @@ def _print_report(report_path: str):
     guards = phases.get("guards", {})
     print("\n[Guards]")
     print(f"  VRAM free: {guards.get('vram_free_mb', '?')} MB")
-    print(f"  Focus workload: {guards.get('focus_workload_active', guards.get('sim_running', '?'))}")
+    print(
+        f"  Focus workload: {guards.get('focus_workload_active', guards.get('sim_running', '?'))}"
+    )
     print(f"  VRAM OK: {guards.get('vram_ok', '?')}")
 
     web = phases.get("web_collection", {})
     web_status = web.get("status", "disabled")
     if web_status != "disabled":
         print(f"\n[Web Collection] — status={web_status}")
-        print(f"  Written: {web.get('total_written', 0)}, Skipped: {web.get('total_skipped', 0)}, Errors: {web.get('total_errors', 0)}")
+        print(
+            f"  Written: {web.get('total_written', 0)}, Skipped: {web.get('total_skipped', 0)}, Errors: {web.get('total_errors', 0)}"
+        )
         for src, r in web.get("sources", {}).items():
             extra = f" [offset->{r.get('offset_end', '?')}]" if src == "wikipedia" else ""
             print(f"  {src}: written={r.get('written', 0)}, status={r.get('status', '?')}{extra}")
@@ -226,20 +237,23 @@ Examples:
   python project/extensions/training/daily_training.py --report-only
         """,
     )
-    parser.add_argument("--dry-run", action="store_true",
-                        help="Run all phases without training")
-    parser.add_argument("--day", type=int, default=None, metavar="N",
-                        help="Override weekday (0=Mon...6=Sun)")
-    parser.add_argument("--no-train", action="store_true",
-                        help="Skip QLoRA training phase")
-    parser.add_argument("--verbose", action="store_true",
-                        help="Enable debug logging")
-    parser.add_argument("--report-only", action="store_true",
-                        help="Print last report and exit")
-    parser.add_argument("--collect", action="store_true",
-                        help="Run web data collection phase before training (default: controlled by WEB_COLLECT_ENABLED in .env)")
-    parser.add_argument("--collect-only", action="store_true",
-                        help="Run web data collection only, skip all training phases")
+    parser.add_argument("--dry-run", action="store_true", help="Run all phases without training")
+    parser.add_argument(
+        "--day", type=int, default=None, metavar="N", help="Override weekday (0=Mon...6=Sun)"
+    )
+    parser.add_argument("--no-train", action="store_true", help="Skip QLoRA training phase")
+    parser.add_argument("--verbose", action="store_true", help="Enable debug logging")
+    parser.add_argument("--report-only", action="store_true", help="Print last report and exit")
+    parser.add_argument(
+        "--collect",
+        action="store_true",
+        help="Run web data collection phase before training (default: controlled by WEB_COLLECT_ENABLED in .env)",
+    )
+    parser.add_argument(
+        "--collect-only",
+        action="store_true",
+        help="Run web data collection only, skip all training phases",
+    )
     args = parser.parse_args()
 
     if args.verbose:
@@ -306,7 +320,9 @@ Examples:
     min_vram = int(os.getenv("DAILY_TRAIN_MIN_VRAM_MB", "7000"))
 
     if _is_sim_running():
-        logger.warning("GPU focus workload detected — daily training deferred. Will retry tomorrow.")
+        logger.warning(
+            "GPU focus workload detected — daily training deferred. Will retry tomorrow."
+        )
         return 0
 
     if _check_session_active():
