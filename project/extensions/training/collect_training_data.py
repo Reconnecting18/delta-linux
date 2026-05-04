@@ -102,15 +102,16 @@ def _print_report(report: dict):
             extra = ""
             if src == "wikipedia":
                 extra = f" [offset {r.get('offset_start', '?')} → {r.get('offset_end', '?')}]"
-            print(f"  {src:<15} status={status:<8} written={written:<5} skipped={skipped:<5} errors={errors}{extra}")
+            print(
+                f"  {src:<15} status={status:<8} written={written:<5} skipped={skipped:<5} errors={errors}{extra}"
+            )
 
     finished = report.get("finished_at", "")
     started = report.get("started_at", "")
     if finished and started:
         try:
             elapsed = (
-                datetime.datetime.fromisoformat(finished) -
-                datetime.datetime.fromisoformat(started)
+                datetime.datetime.fromisoformat(finished) - datetime.datetime.fromisoformat(started)
             ).total_seconds()
             print(f"\nElapsed: {elapsed:.1f}s")
         except Exception:
@@ -133,18 +134,25 @@ Examples:
   python project/extensions/training/collect_training_data.py --batch 5000
         """,
     )
-    parser.add_argument("--dry-run", action="store_true",
-                        help="Run without writing any data")
-    parser.add_argument("--source", default="all", choices=sorted(_VALID_SOURCES),
-                        help="Source to collect from (default: all enabled in .env)")
-    parser.add_argument("--batch", type=int, default=None, metavar="N",
-                        help="Wikipedia batch size override")
-    parser.add_argument("--max-per-source", type=int, default=None, metavar="N",
-                        help="Max items per non-Wikipedia source")
-    parser.add_argument("--verbose", action="store_true",
-                        help="Enable debug logging")
-    parser.add_argument("--report", action="store_true",
-                        help="Print full report after collection")
+    parser.add_argument("--dry-run", action="store_true", help="Run without writing any data")
+    parser.add_argument(
+        "--source",
+        default="all",
+        choices=sorted(_VALID_SOURCES),
+        help="Source to collect from (default: all enabled in .env)",
+    )
+    parser.add_argument(
+        "--batch", type=int, default=None, metavar="N", help="Wikipedia batch size override"
+    )
+    parser.add_argument(
+        "--max-per-source",
+        type=int,
+        default=None,
+        metavar="N",
+        help="Max items per non-Wikipedia source",
+    )
+    parser.add_argument("--verbose", action="store_true", help="Enable debug logging")
+    parser.add_argument("--report", action="store_true", help="Print full report after collection")
     args = parser.parse_args()
 
     if args.verbose:
@@ -196,8 +204,7 @@ Examples:
     # Save report JSON alongside logs
     try:
         report_file = os.path.join(
-            _LOG_DIR,
-            f"{datetime.datetime.now().strftime('%Y-%m-%d')}_report.json"
+            _LOG_DIR, f"{datetime.datetime.now().strftime('%Y-%m-%d')}_report.json"
         )
         with open(report_file, "w", encoding="utf-8") as f:
             json.dump(report, f, indent=2, ensure_ascii=False)

@@ -591,6 +591,8 @@ _ARCH_PATTERNS = _re.compile(
     r"kernel\s*upgrade|rolling\s*release)\b",
     _re.IGNORECASE,
 )
+
+
 def filter_tools(
     tools: list,
     domain: str | None = None,

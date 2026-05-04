@@ -175,6 +175,7 @@ def require_ingest_api_key(
         detail="Ingest key required: X-Deltai-Ingest-Key or Authorization: Bearer (match DELTAI_INGEST_API_KEY)",
     )
 
+
 _HERE = os.path.dirname(os.path.abspath(__file__))
 
 # ── EMERGENCY BACKUP STATE ────────────────────────────────────────────
@@ -589,6 +590,7 @@ _REACT_MAX_ITERATIONS = int(os.getenv("REACT_MAX_ITERATIONS", "3"))
 _REACT_ENABLED = os.getenv("REACT_ENABLED", "true").lower() in ("true", "1", "yes")
 
 _REACT_ALLOW_CLARIFY = os.getenv("REACT_ALLOW_CLARIFY", "true").lower() in ("true", "1", "yes")
+
 
 def _is_react_eligible(decision) -> bool:
     """Check if a query should use the ReAct reasoning loop."""
@@ -2737,9 +2739,7 @@ class IngestRequest(BaseModel):
 
 
 @app.post("/ingest")
-async def ingest_endpoint(
-    req: IngestRequest, _ingest_auth: None = Depends(require_ingest_api_key)
-):
+async def ingest_endpoint(req: IngestRequest, _ingest_auth: None = Depends(require_ingest_api_key)):
     """
     Ingest structured context from an external service into ChromaDB.
     This is deltai's connector — any service can push context here.
