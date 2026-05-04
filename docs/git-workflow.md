@@ -8,7 +8,7 @@ deltai keeps a **small upstream core** and pushes optional features into [`proje
 |--------|---------|
 | **`main`** | Shareable **lightweight** upstream: core daemon, router, RAG, shared tools, and only **`example_extension`** + **`training`** under `project/extensions/` (see [`.gitignore`](../.gitignore)). Homelab / distro / cloud-bridge packages (e.g. `server_network`, `arch_update_guard`, `appwrite_bridge`) are **not** tracked here — default clone stays minimal. |
 | **`feature/*`** | Short-lived work you intend to merge into `main` via PR (e.g. `feature/workstation-cloud-arch`). |
-| **`personal`** | Long-lived overlay: merge `main`, then add **your** integrations — optional extensions (`git add -f project/extensions/<name>/`), Cursor rules, etc. Examples: server inventory + SSH tools, Arch update guard, Appwrite bridge. Remove or stop tracking a directory to “uninstall” that overlay. Not merged wholesale into `main`. |
+| **`personal`** | Long-lived overlay: merge `main`, then add **your** integrations — optional extensions (`git add -f project/extensions/<name>/`), AI agent rules (`.ai-rules/`), etc. Examples: server inventory + SSH tools, Arch update guard, Appwrite bridge. Remove or stop tracking a directory to “uninstall” that overlay. Not merged wholesale into `main`. |
 
 Do **not** merge `personal` → `main` in bulk. Promote changes with cherry-picks or a fresh branch from `main` and a focused PR.
 

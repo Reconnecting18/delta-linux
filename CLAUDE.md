@@ -5,7 +5,7 @@ This is the deep context file for AI coding assistants (Claude Code, Cursor, Cop
 **For agents/AI tools, the documented entry points are:**
 - **[CLAUDE.md](CLAUDE.md)** (this file) — full architecture, file map, stream protocol, development workflow. Read by Claude Code automatically; suitable for any agent.
 - **[AGENTS.md](AGENTS.md)** — short cross-tool onboarding (Cursor, Copilot, OpenAI Codex, etc.) — boundaries, paths, verify commands.
-- **[`.cursor/rules/`](.cursor/rules/)** — Cursor-specific project rules (`.mdc` files).
+- **[`.ai-rules/rules/`](.ai-rules/rules/)** — AI agent project rules (`.mdc` files; originally Cursor-format, readable by any agent).
 - **[`.claude/settings.json`](.claude/settings.json)** — Claude Code permissions/allow-list (no secrets — safe to commit).
 - **[`.github/`](.github/)** — issue templates, PR template, CI/CodeQL workflows.
 

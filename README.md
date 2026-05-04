@@ -318,7 +318,7 @@ deltai/
 ├── AGENTS.md                     Agent/Cursor onboarding (boundaries, verify commands)
 ├── CLAUDE.md                     Full architecture context for AI coding sessions
 ├── CONTRIBUTING.md               Issues and PR guidelines
-├── .cursor/rules/                Cursor project rules (.mdc)
+├── .ai-rules/rules/              AI agent project rules (.mdc)
 ├── .github/                      Issue templates, workflows
 ├── .vscode/                      launch.json + tasks.json
 ├── project/                      deltai daemon (FastAPI)
@@ -470,7 +470,7 @@ This repo is set up for **Cursor**, **Claude Code**, and any agent that reads ma
 |------|------|
 | [AGENTS.md](AGENTS.md) | Short onboarding for agents — boundaries, paths, verify commands |
 | [CLAUDE.md](CLAUDE.md) | Full architecture, stream protocol, file map, development workflow |
-| [`.cursor/rules/`](.cursor/rules/) | Cursor project rules (short `.mdc` files) |
+| [`.ai-rules/rules/`](.ai-rules/rules/) | AI agent project rules (short `.mdc` files) |
 | [`.vscode/launch.json`](.vscode/launch.json) | Debug/run FastAPI (uvicorn) from workspace |
 | [docs/local-model-workflow.md](docs/local-model-workflow.md) | Operator guide for RAG, models, and adapters |
 
