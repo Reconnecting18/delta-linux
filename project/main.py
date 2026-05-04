@@ -1,4 +1,5 @@
-﻿"""deltai FastAPI application (development server on TCP :8000)."""
+"""deltai FastAPI application (development server on TCP :8000)."""
+
 import os
 import sys
 import types
@@ -929,9 +930,7 @@ class IngestRequest(BaseModel):
 
 
 @app.post("/ingest")
-async def ingest_endpoint(
-    req: IngestRequest, _ingest_auth: None = Depends(require_ingest_api_key)
-):
+async def ingest_endpoint(req: IngestRequest, _ingest_auth: None = Depends(require_ingest_api_key)):
     """
     Ingest structured context from an external service into ChromaDB.
     This is deltai's connector — any service can push context here.

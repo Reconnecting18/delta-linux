@@ -71,9 +71,7 @@ def load_settings() -> Settings:
     config_dir = Path(os.getenv("DELTA_CONFIG_DIR", str(_xdg_config_home() / APP_DIRNAME)))
     cache_dir = Path(os.getenv("DELTA_CACHE_DIR", str(_xdg_cache_home() / APP_DIRNAME)))
     sqlite_path = Path(os.getenv("DELTA_SQLITE_PATH", str(data_dir / "delta.db")))
-    reports_dir = Path(
-        os.getenv("DELTA_REPORTS_DIR", str(data_dir / "ai_reports"))
-    ).expanduser()
+    reports_dir = Path(os.getenv("DELTA_REPORTS_DIR", str(data_dir / "ai_reports"))).expanduser()
     ai_reports_enabled = _env_flag_enabled("DELTA_AI_REPORTS", default=True)
     runtime_dir = _runtime_dir() / APP_DIRNAME
 

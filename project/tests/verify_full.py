@@ -298,7 +298,9 @@ def run():
         if os.path.isfile(p):
             os.remove(p)
         rec = srv_reg.add_server("10.0.0.1", "testuser", port=2222, label="lab", tags=["a"])
-        check("server_network add_server", rec.get("host") == "10.0.0.1" and rec.get("port") == 2222)
+        check(
+            "server_network add_server", rec.get("host") == "10.0.0.1" and rec.get("port") == 2222
+        )
         lst = srv_reg.list_servers()
         check("server_network list_servers", len(lst) == 1)
         got = srv_reg.get_server(rec["id"])
@@ -340,9 +342,7 @@ def run():
     from tools.definitions import TOOLS, _merge_extension_tools, filter_tools
 
     _merge_extension_tools(appwrite_bridge.TOOLS)
-    ft_aw = filter_tools(
-        TOOLS, query="sync project files to appwrite cloud bucket", tier=3
-    )
+    ft_aw = filter_tools(TOOLS, query="sync project files to appwrite cloud bucket", tier=3)
     fnames_aw = {t["function"]["name"] for t in ft_aw}
     check(
         "filter_tools includes appwrite",

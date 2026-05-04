@@ -44,7 +44,10 @@ TOOLS = [
             "parameters": {
                 "type": "object",
                 "properties": {
-                    "bucket_id": {"type": "string", "description": "Override bucket id (optional)."},
+                    "bucket_id": {
+                        "type": "string",
+                        "description": "Override bucket id (optional).",
+                    },
                     "limit": {"type": "integer", "description": "Page size 1–100.", "default": 25},
                     "offset": {"type": "integer", "default": 0},
                 },
@@ -63,7 +66,10 @@ TOOLS = [
             "parameters": {
                 "type": "object",
                 "properties": {
-                    "local_path": {"type": "string", "description": "File path under workspace roots."},
+                    "local_path": {
+                        "type": "string",
+                        "description": "File path under workspace roots.",
+                    },
                     "bucket_id": {"type": "string"},
                     "file_id": {"type": "string", "description": "Optional; default unique()."},
                 },
@@ -287,8 +293,7 @@ def _remote_push_handler(
         return _json_result(
             {
                 "ok": False,
-                "error": "file_id must be 'unique()' or a short alphanumeric id "
-                "([a-zA-Z0-9._-])",
+                "error": "file_id must be 'unique()' or a short alphanumeric id ([a-zA-Z0-9._-])",
             }
         )
     fid_bash = _bash_single_quoted(fid_ok)

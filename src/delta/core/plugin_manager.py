@@ -134,9 +134,7 @@ class PluginManager:
                 continue
             for cmd_name, fn in raw.items():
                 if not isinstance(cmd_name, str) or not callable(fn):
-                    logger.warning(
-                        "Plugin %r: skipping invalid command entry %r", pname, cmd_name
-                    )
+                    logger.warning("Plugin %r: skipping invalid command entry %r", pname, cmd_name)
                     continue
                 merged[f"{pname}:{cmd_name}"] = fn
         return merged

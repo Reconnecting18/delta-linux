@@ -64,7 +64,9 @@ def _headers() -> dict[str, str]:
     }
 
 
-def storage_list(*, bucket_id: str | None = None, limit: int = 25, offset: int = 0) -> dict[str, Any]:
+def storage_list(
+    *, bucket_id: str | None = None, limit: int = 25, offset: int = 0
+) -> dict[str, Any]:
     _require_config(need_bucket=False)
     bid = (bucket_id or _bucket_id()).strip()
     if not bid:
@@ -162,7 +164,9 @@ def function_execute(
     url = f"{_endpoint()}/functions/{fid}/executions"
     payload = {"body": body, "async": bool(async_execution)}
     with httpx.Client(timeout=_DEFAULT_TIMEOUT) as client:
-        r = client.post(url, headers={**_headers(), "Content-Type": "application/json"}, json=payload)
+        r = client.post(
+            url, headers={**_headers(), "Content-Type": "application/json"}, json=payload
+        )
     if r.status_code >= 400:
         try:
             detail = r.json()

@@ -1,4 +1,4 @@
-﻿import asyncio
+import asyncio
 import json
 import logging
 import os
@@ -602,6 +602,7 @@ _REACT_MAX_ITERATIONS = int(os.getenv("REACT_MAX_ITERATIONS", "3"))
 _REACT_ENABLED = os.getenv("REACT_ENABLED", "true").lower() in ("true", "1", "yes")
 
 _REACT_ALLOW_CLARIFY = os.getenv("REACT_ALLOW_CLARIFY", "true").lower() in ("true", "1", "yes")
+
 
 def _is_react_eligible(decision) -> bool:
     """Check if a query should use the ReAct reasoning loop."""
@@ -1555,7 +1556,6 @@ async def lifespan(app: FastAPI):
             safe_errors.log_exception(logger, "Extensions shutdown failed", e)
 
 
-
 def _sanitize_python_json(text: str) -> str:
     """Replace Python literals (True/False/None) with JSON equivalents."""
     text = re.sub(r"(?<=[\s:,\[])True(?=[\s,}\]])", "true", text)
@@ -1956,4 +1956,3 @@ async def _ingest_pipeline_worker():
         except Exception as e:
             safe_errors.log_exception(logger, "Ingest pipeline error", e)
             await asyncio.sleep(1)
-

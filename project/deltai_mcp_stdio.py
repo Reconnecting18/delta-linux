@@ -6,6 +6,7 @@ MCP stdio server for deltai — run from the project/ directory (same as uvicorn
 
 Or use the installed launcher: deltai-mcp (requires pip install -e ".[mcp]").
 """
+
 from __future__ import annotations
 
 import sys

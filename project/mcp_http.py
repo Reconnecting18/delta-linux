@@ -41,7 +41,9 @@ class _McpHttpAuthASGI:
         header_ok = hdrs.get("x-deltai-mcp-key", "") == self.key
         if not bearer_ok and not header_ok:
             await JSONResponse(
-                {"detail": "MCP HTTP: send Authorization: Bearer <DELTAI_MCP_HTTP_KEY> or X-Deltai-Mcp-Key"},
+                {
+                    "detail": "MCP HTTP: send Authorization: Bearer <DELTAI_MCP_HTTP_KEY> or X-Deltai-Mcp-Key"
+                },
                 status_code=401,
             )(scope, receive, send)
             return

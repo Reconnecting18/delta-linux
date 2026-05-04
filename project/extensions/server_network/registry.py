@@ -40,7 +40,9 @@ def _data_dir() -> str:
     home = _home_real()
     raw = (os.getenv("DELTA_DATA_DIR") or "").strip()
     if not raw:
-        return path_guard.realpath_under(home, os.path.join(os.path.expanduser("~"), ".local", "share", "deltai"))
+        return path_guard.realpath_under(
+            home, os.path.join(os.path.expanduser("~"), ".local", "share", "deltai")
+        )
     return path_guard.realpath_under(home, os.path.expanduser(raw))
 
 
@@ -79,7 +81,9 @@ def _validate_host(host: str) -> str:
             raise ValueError("invalid IPv6 address") from exc
         return raw if raw.startswith("[") and raw.endswith("]") else h
     if not _HOST_RE.match(h):
-        raise ValueError("host must be a hostname, IPv4/IPv6, or single-label name (letters, digits, dot, hyphen)")
+        raise ValueError(
+            "host must be a hostname, IPv4/IPv6, or single-label name (letters, digits, dot, hyphen)"
+        )
     return h
 
 

@@ -27,6 +27,7 @@ logger = logging.getLogger(__name__)
 # Client-visible orchestrator errors must not echo exception text (CWE-209 / stack-trace exposure).
 _ORCHESTRATOR_CLIENT_ERROR = "An internal error occurred"
 
+
 class Orchestrator:
     """Top-level coordinator for all DELTA task execution."""
 

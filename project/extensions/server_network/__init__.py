@@ -43,6 +43,7 @@ class ScriptBody(BaseModel):
     script: str
     timeout_sec: int = 300
 
+
 logger = logging.getLogger("deltai.extensions.server_network")
 
 TOOLS = [

@@ -161,9 +161,7 @@ def test_tool_handlers_json_roundtrip():
         "extensions.arch_update_guard.news_wiki.refresh_news_digest_to_rag",
         return_value={"status": "ok", "items_fetched": 0, "ingest": {}},
     ):
-        s2 = execute_tool(
-            "arch_refresh_news_digest", {"wiki_query": "", "force": True}
-        )
+        s2 = execute_tool("arch_refresh_news_digest", {"wiki_query": "", "force": True})
     assert json.loads(s2)["status"] == "ok"
 
 

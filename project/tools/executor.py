@@ -22,6 +22,7 @@ _TOOL_ERR = "An unexpected error occurred"
 try:
     from deltai_api.logging_setup import get_request_id
 except ImportError:
+
     def get_request_id():
         return None
 
