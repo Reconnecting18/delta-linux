@@ -49,6 +49,7 @@ from router import (
     is_cloud_available,
     is_cloud_available_sync,
     is_sim_running,
+    mark_model_missing,
     record_cloud_usage,
     route,
 )
@@ -135,6 +136,9 @@ except ImportError:
 OLLAMA_URL = os.getenv("OLLAMA_URL", "http://localhost:11434")
 DELTAI_MODEL = os.getenv("DELTAI_MODEL", "deltai")
 BACKUP_MAX_RETRIES = int(os.getenv("BACKUP_MAX_RETRIES", "2"))
+# Shorter per-request timeout for CPU-only inference (num_gpu=0).  Default 45s surfaces
+# failures quickly instead of waiting the full 120s for a model that won't finish.
+DELTAI_CPU_TIMEOUT_SEC = float(os.getenv("DELTAI_CPU_TIMEOUT_SEC", "45"))
 TELEMETRY_API_URL = os.getenv("TELEMETRY_API_URL", "").strip()
 # Optional: when set, POST /ingest, /ingest/batch, /ingest/cleanup, /memory/ingest, and
 # GET /ingest/pipeline/status require X-Deltai-Ingest-Key or Authorization: Bearer.
@@ -1470,8 +1474,9 @@ async def _post_startup_cloud_and_models() -> None:
                 logger.error(f"Model check: {model} ({role}) — MISSING (system degraded)")
             else:
                 logger.warning(
-                    f"Model check: {model} ({role}) — MISSING (emergency generator unavailable)"
+                    f"Model check: {model} ({role}) — MISSING (skipped from fallback chain)"
                 )
+                mark_model_missing(model)
     finally:
         elapsed_ms = int((_time.monotonic() - t0) * 1000)
         logger.debug(f"Deferred cloud/model checks finished in {elapsed_ms}ms")
