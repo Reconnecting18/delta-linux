@@ -39,6 +39,20 @@ import time
 
 logger = logging.getLogger("deltai.router")
 
+# Models confirmed missing at startup — skipped in fallback chain without retrying.
+_known_missing_models: set[str] = set()
+
+
+def mark_model_missing(model: str) -> None:
+    """Record a model as unavailable so the fallback chain skips it immediately."""
+    if model:
+        _known_missing_models.add(model.strip())
+
+
+def is_model_known_missing(model: str) -> bool:
+    return bool(model) and model.strip() in _known_missing_models
+
+
 # ── CONFIGURATION ───────────────────────────────────────────────────────
 
 
@@ -808,7 +822,11 @@ def get_backup_model(primary: str) -> str | None:
         default_model: backup_default,  # deltai-qwen3b  → deltai-fallback
         backup_strong: backup_default,  # deltai-nemo    → deltai-fallback
     }
-    return mapping.get(primary)
+    candidate = mapping.get(primary)
+    # Walk the chain, skipping models that were confirmed missing at startup.
+    while candidate and is_model_known_missing(candidate):
+        candidate = mapping.get(candidate)
+    return candidate
 
 
 async def check_model_health(model: str) -> bool:
