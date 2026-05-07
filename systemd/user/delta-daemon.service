@@ -12,6 +12,9 @@ Environment=DELTA_CACHE_DIR=%h/.cache/deltai
 Environment=DELTA_SQLITE_PATH=%h/.local/share/deltai/delta.db
 Environment=DELTA_DAEMON_SOCKET=%t/deltai/daemon.sock
 Environment=DELTA_IPC_SOCKET=%t/deltai/ipc.sock
+# WSL2: exposes NVIDIA CUDA libraries so Ollama/pynvml can use the GPU.
+# Harmless on native Linux (path simply won't exist).
+Environment=LD_LIBRARY_PATH=/usr/lib/wsl/lib
 ExecStart=/usr/bin/env delta-daemon
 Restart=on-failure
 RestartSec=2
