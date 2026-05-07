@@ -70,4 +70,7 @@ class IPCServer:
             await writer.drain()
         finally:
             writer.close()
-            await writer.wait_closed()
+            try:
+                await writer.wait_closed()
+            except (BrokenPipeError, ConnectionResetError):
+                pass
